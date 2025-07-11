@@ -1,4 +1,6 @@
 import Resume from '../models/resumeModel.js';
+import fs from 'fs';
+import path from 'path';
 
 
 export const createResume = async (req, res) => {
@@ -26,6 +28,7 @@ export const createResume = async (req, res) => {
             },
             workExperience: [
                 {
+                    
                     company: '',
                     role: '',
                     startDate: '',
@@ -35,6 +38,7 @@ export const createResume = async (req, res) => {
             ],
             education: [
                 {
+                
                     degree: '',
                     institution: '',
                     startDate: '',
@@ -102,7 +106,7 @@ export const createResume = async (req, res) => {
 
 //Get function 
 
-export const getUserRsumes = async (req, res) => {
+export const getUserResumes = async (req, res) => {
     try{
         const resumes = await Resume.find({userId : req.user._id}).sort
         ({UpdatedAt: -1});
@@ -203,6 +207,45 @@ export const deleteResume = async (req, res) => {
             });     
 
         }
+
+        //Create  a uploads folder and store the resume there
+         const uploadsFolder = path.join(process.cwd(), 'uploads');
+
+
+         //Dele thumbnail Function
+
+         if(resume.thumbnailLink){
+            const oldThumbnail = path.join(uploadsFolder, resume.thumbnailLink);
+            if(fs.existsSync(oldThumbnail)) {
+                fs.unlinkSync(oldThumbnail);
+            }
+         }
+
+         if(resume.profileInfo?.previewUrl) {
+            const oldPreview = path.join(uploadsFolder, path.basename(resume.profileInfo.previewUrl));
+            if(fs.existsSync(oldPreview)) {
+                fs.unlinkSync(oldPreview);
+            }
+         }
+
+         //Delete the resume Document 
+
+
+         const deleted = await Resume.deleteOne({
+            _id: req.params.id,
+            userId: req.user._id
+        });
+        if (deleted.deletedCount === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Resume not found',
+            });
+        }
+
+        res.json({
+            success: true,
+            message: 'Resume deleted successfully',
+        });
     } catch (error) {
         res.status(500).json({
             success: false,
