@@ -3,9 +3,10 @@ import jwt from 'jsonwebtoken'
 
 export const protect = async (req , res , next) =>{
     try {
-        const token = req.headers.authorization?.split(' ')[1];
+        let token = req.headers.authorization;
 
         if(token && token.startsWith('Bearer ')) {
+            token = token.split("")[1];
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             req.user = await User.findById(decoded.id).select('-password');
             next();
@@ -15,7 +16,7 @@ export const protect = async (req , res , next) =>{
         }
     } catch (error) {
         console.error('Error in auth middleware:', error);
-        res.status(401).json({ message: 'Not authorized, token failed' });
+        res.status(401).json({ message: 'Not authorized, token failed' , error: error.message});
         
     }
 
