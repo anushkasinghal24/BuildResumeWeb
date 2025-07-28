@@ -4,6 +4,8 @@ import { landingPageStyles } from "../assets/dummystyle.js";
 import { ArrowRight, LayoutTemplate, Menu, X } from 'lucide-react';
 
 import { UserContext } from '../context/userContext';
+import { Zap, Download } from "lucide-react";
+
 //import ProfileInfoCard from '../components/ProfileInfoCard';
 
 const LandingPage = () => {
@@ -137,7 +139,7 @@ const LandingPage = () => {
               </div>
 
               {/* Stats Grid*/}
-              <div classNam = {landingPageStyles.statsContainer}>
+              <div className = {landingPageStyles.statsContainer}>
                 {[
 
                   { value: '50K+', label: 'Resumes Created', gradient: 'from-violet-600 to-fuchsia-600' },
@@ -147,10 +149,10 @@ const LandingPage = () => {
                   
                 ].map((stat, idx ) => (
                   <div className = {landingPageStyles.statItem} key = {idx}>
-                    <div className = {`${landingPageStyles.statNumber} ${statusbar.gradient}`}>
-                      {statusbar.value}
+                    <div className = {`${landingPageStyles.statNumber} ${stat.gradient}`}>
+                      {stat.value}
                     </div>
-                    <div className = {landingPageStyles.statLabel}>{statusbar.label}</div>
+                    <div className = {landingPageStyles.statLabel}>{stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -253,6 +255,50 @@ const LandingPage = () => {
             </div>
 
             <div className = {landingPageStyles.featuresGrid}>
+
+               {[
+                  {
+                      icon: <Zap className={landingPageStyles.featureIcon} />,
+                      title: "Lightning Fast",
+                      description: "Create professional resumes in under 5 minutes with our streamlined process",
+                      gradient: landingPageStyles.featureIconViolet,
+                      bg: landingPageStyles.featureCardViolet
+                  },
+                  {
+                      icon: <LayoutTemplate className={landingPageStyles.featureIcon} />,
+                      title: "Pro Templates",
+                      description: "Choose from dozens of recruiter-approved, industry-specific templates",
+                      gradient: landingPageStyles.featureIconFuchsia,
+                      bg: landingPageStyles.featureCardFuchsia
+                  },
+                  {
+                      icon: <Download className={landingPageStyles.featureIcon} />,
+                      title: "Instant Export",
+                      description: "Download high-quality PDFs instantly with perfect formatting",
+                      gradient: landingPageStyles.featureIconOrange,
+                      bg: landingPageStyles.featureCardOrange
+                  }
+              ].map(( feature , index )=>(
+                
+                <div key = {index} className = {landingPageStyles.featureCard}>
+                  <div className = { landingPageStyles.featureCardHover}></div>
+                  <div className = {`${landingPageStyles.featureCardContent} ${feature.bg}`}>
+                    <div className = {`${landingPageStyles.featureIconContainer} ${feature.gradient}`}>
+                      {feature.icon}
+                    </div>
+                    <h3 className = {landingPageStyles.featureTitle}>
+                      {feature.title}
+                    </h3>
+                    <p className = {landingPageStyles.featureDescription}>{feature.description}</p>
+
+                    
+                  </div>
+                </div>
+
+                
+
+                
+              ))}
 
             </div>
           </div>
