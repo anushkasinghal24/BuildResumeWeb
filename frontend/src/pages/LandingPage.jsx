@@ -2,11 +2,16 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { landingPageStyles } from "../assets/dummystyle.js";
 import { ArrowRight, LayoutTemplate, Menu, X } from 'lucide-react';
+import Modal from '../components/Modal'; // ✅ Adjust path as per your project
+import Login from '../components/Login';
+import SignUp from '../components/SignUp';
+
+
 
 import { UserContext } from '../context/userContext';
 import { Zap, Download } from "lucide-react";
 
-//import ProfileInfoCard from '../components/ProfileInfoCard';
+import ProfileInfoCard from '../components/ProfileInfoCard';
 
 const LandingPage = () => {
   const { user } = useContext(UserContext); // Ensure UserContext is correctly imported
@@ -303,9 +308,81 @@ const LandingPage = () => {
             </div>
           </div>
         </section>
+ 
+        {/*CTA Section */}
+        <section className= {landingPageStyles.ctaSection}>
+          <div className =  {landingPageStyles.ctaContainer}>
+            <div className = {landingPageStyles.ctaCard}>
+              <div className = { landingPageStyles.ctaCardBg}></div>
+              <div className = { landingPageStyles.ctaCardContent}>
+                <h2 className = { landingPageStyles.ctaTitle}>
+                  Ready to Build Your  <span className = {landingPageStyles.ctaTitleGradient}>
+                    Standout Resume?
+                  </span>
+                </h2>
+                <p className = { landingPageStyles.ctaDescription }>Start your journey towards a professional resume that gets you noticed.</p>
+              
+              <button className = { landingPageStyles.ctaButton }onClick = {handleCTA}>
+
+                <div className = {landingPageStyles.ctaButtonOverlay}></div>
+                <span className = {landingPageStyles.ctaButtonText}>Start Building</span>
+              </button>
+
+            </div>
+            <div className = {landingPageStyles.statsContainer}>
+                {[
+
+                  { value: '50K+', label: 'Resumes Created', gradient: 'from-violet-600 to-fuchsia-600' },
+                  { value: '4.9★', label: 'User Rating', gradient: 'from-orange-500 to-red-500' },
+                  { value: '5 Min', label: 'Build Time', gradient: 'from-emerald-500 to-teal-500' }
+
+                  
+                ].map((stat, idx ) => (
+                  <div className = {landingPageStyles.statItem} key = {idx}>
+                    <div className = {`${landingPageStyles.statNumber} ${stat.gradient}`}>
+                      {stat.value}
+                    </div>
+                    <div className = {landingPageStyles.statLabel}>{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </section>
+
 
         
       </main>
+
+      {/* Footer Section */}
+
+      <footer className = { landingPageStyles.footer}>
+        <div className = {landingPageStyles.footerContainer}>
+          <p className = { landingPageStyles.footerText}>
+            <h4>Good to see you again !!!</h4>
+          </p>
+        </div>
+      </footer>
+
+      {/* Modal for Login and SignUp */}
+
+      <Modal isOpen = {openAuthModal} onClose ={() => {
+        
+        setOpenAuthModal(false)
+        setCurrentPage("login")
+      }} hideHeader ={true}>
+
+          <div>
+            {currentPage === "login"  && <Login setCurrentPage = { setCurrentPage} />}
+            {currentPage === "signup" && <SignUp setCurrentPage = { setCurrentPage} />}
+          </div>
+        
+      </Modal>
+
+
+
+
     </div>
   );
 };
