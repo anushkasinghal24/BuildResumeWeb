@@ -1,10 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { landingPageStyles } from "../assets/dummystyle.js";
 import { ArrowRight, LayoutTemplate, Menu, X } from 'lucide-react';
-import Modal from '../components/Modal'; // ✅ Adjust path as per your project
-import Login from '../components/Login';
-import SignUp from '../components/SignUp';
+// import Modal from '../components/Modal'; // ✅ Adjust path as per your project
+// import Login from '../components/Login';
+// import SignUp from '../components/SignUp';
+import { landingPageStyles} from "../assets/dummystyle.js";
+
+
 
 
 
@@ -329,25 +331,7 @@ const LandingPage = () => {
               </button>
 
             </div>
-            <div className = {landingPageStyles.statsContainer}>
-                {[
-
-                  { value: '50K+', label: 'Resumes Created', gradient: 'from-violet-600 to-fuchsia-600' },
-                  { value: '4.9★', label: 'User Rating', gradient: 'from-orange-500 to-red-500' },
-                  { value: '5 Min', label: 'Build Time', gradient: 'from-emerald-500 to-teal-500' }
-
-                  
-                ].map((stat, idx ) => (
-                  <div className = {landingPageStyles.statItem} key = {idx}>
-                    <div className = {`${landingPageStyles.statNumber} ${stat.gradient}`}>
-                      {stat.value}
-                    </div>
-                    <div className = {landingPageStyles.statLabel}>{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
+          </div>
           </div>
         </section>
 
@@ -369,9 +353,9 @@ const LandingPage = () => {
 
       <Modal isOpen = {openAuthModal} onClose ={() => {
         
-        setOpenAuthModal(false)
-        setCurrentPage("login")
-      }} hideHeader ={true}>
+          setOpenAuthModal(false)
+          setCurrentPage("login")
+      }} hideHeader>
 
           <div>
             {currentPage === "login"  && <Login setCurrentPage = { setCurrentPage} />}
@@ -384,7 +368,7 @@ const LandingPage = () => {
 
 
     </div>
-  );
-};
+  )
+}
 
 export default LandingPage;
