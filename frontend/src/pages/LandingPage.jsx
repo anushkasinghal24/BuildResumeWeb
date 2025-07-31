@@ -1,9 +1,9 @@
+import Modal from '../components/Modal'; 
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, LayoutTemplate, Menu, X } from 'lucide-react';
-// import Modal from '../components/Modal'; // ✅ Adjust path as per your project
-// import Login from '../components/Login';
-// import SignUp from '../components/SignUp';
+import Login from '../components/Login';
+import SignUp from '../components/SignUp';
 import { landingPageStyles} from "../assets/dummystyle.js";
 
 
